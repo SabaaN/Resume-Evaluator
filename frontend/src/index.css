@@ -1,0 +1,478 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+
+:root {
+  --bg: #f1f5ef;
+  --surface: #ffffff;
+  --surface-soft: #e8f0e5;
+  --ink: #26352b;
+  --sage: #9fbea0;
+  --sage-dark: #668a6b;
+  --sage-deep: #476a50;
+  --lavender: #a99acb;
+  --lavender-dark: #806ca8;
+  --lavender-soft: #eeeafb;
+  --border: #d6e2d3;
+  --muted: #718074;
+  --error: #b5654f;
+  --error-bg: #f8eeec;
+  --shadow: 0 12px 32px rgba(71, 106, 80, 0.09);
+  --shadow-hover: 0 18px 40px rgba(71, 106, 80, 0.15);
+
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-ui: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --radius: 14px;
+  --max-width: 960px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 8% 5%, #dcebd9 0, transparent 25rem),
+    radial-gradient(circle at 95% 12%, #e8e0f6 0, transparent 22rem),
+    var(--bg);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 44px 24px 96px;
+}
+
+h1,
+h2,
+h3 {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(2rem, 5vw, 3.1rem);
+  line-height: 1.1;
+}
+
+h2 {
+  font-size: 1.7rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+}
+
+p {
+  margin: 0;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(71, 106, 80, 0.16);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--lavender);
+  outline-offset: 3px;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--ink);
+  padding: 11px 13px;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--lavender);
+  box-shadow: 0 0 0 4px var(--lavender-soft);
+  outline: 0;
+}
+
+/* Reusable dashboard cards */
+.card,
+.panel,
+.dashboard-card,
+.stat-card,
+.result-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: var(--shadow);
+  padding: 22px;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.card:hover,
+.panel:hover,
+.dashboard-card:hover,
+.stat-card:hover,
+.result-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* Gamified progress elements */
+.progress,
+.progress-bar {
+  overflow: hidden;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--surface-soft);
+}
+
+.progress > *,
+.progress-bar > * {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--sage-dark), var(--lavender));
+}
+
+.badge,
+.tag,
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 999px;
+  background: var(--lavender-soft);
+  color: var(--lavender-dark);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 5px 10px;
+}
+
+.badge.success,
+.status.success {
+  background: #e0f0df;
+  color: var(--sage-deep);
+}
+
+.badge::before,
+.status::before {
+  content: '✦';
+  font-size: 0.7rem;
+}
+
+.primary,
+button[type='submit'] {
+  background: linear-gradient(135deg, var(--sage-dark), var(--sage-deep));
+  color: white;
+  font-weight: 700;
+  padding: 11px 18px;
+}
+
+.secondary {
+  background: var(--lavender-soft);
+  color: var(--lavender-dark);
+  font-weight: 600;
+  padding: 11px 18px;
+}
+
+.stat-value,
+.score,
+.score-value {
+  color: var(--sage-deep);
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  font-weight: 700;
+}
+
+.muted,
+.subtitle,
+.helper-text {
+  color: var(--muted);
+}
+
+@media (max-width: 640px) {
+  #root {
+    padding: 28px 16px 64px;
+  }
+
+  .card,
+  .panel,
+  .dashboard-card,
+  .stat-card,
+  .result-card {
+    padding: 17px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+/* Animated dashboard atmosphere */
+/* Animated dashboard atmosphere */
+body::before,
+body::after {
+  position: fixed;
+  z-index: -1;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  content: '';
+  pointer-events: none;
+  filter: blur(4px);
+  opacity: 0.45;
+  animation: float 8s ease-in-out infinite;
+}
+
+body::before {
+  top: 18%;
+  left: -70px;
+  background: #d5e8d2;
+}
+
+body::after {
+  right: -65px;
+  bottom: 12%;
+  background: #e5ddf5;
+  animation-delay: -4s;
+}
+
+/* Gentle card entrance animation */
+.card,
+.panel,
+.dashboard-card,
+.stat-card,
+.result-card {
+  animation: card-enter 500ms ease both;
+}
+
+.card:nth-child(2),
+.panel:nth-child(2),
+.dashboard-card:nth-child(2),
+.stat-card:nth-child(2),
+.result-card:nth-child(2) {
+  animation-delay: 80ms;
+}
+
+.card:nth-child(3),
+.panel:nth-child(3),
+.dashboard-card:nth-child(3),
+.stat-card:nth-child(3),
+.result-card:nth-child(3) {
+  animation-delay: 160ms;
+}
+
+/* Interactive button shine */
+.primary,
+.secondary,
+button[type='submit'] {
+  position: relative;
+  overflow: hidden;
+}
+
+.primary::after,
+.secondary::after,
+button[type='submit']::after {
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 45%;
+  height: 100%;
+  content: '';
+  background: linear-gradient(
+    100deg,
+    transparent,
+    rgba(255, 255, 255, 0.35),
+    transparent
+  );
+  transform: skewX(-20deg);
+}
+
+.primary:hover::after,
+.secondary:hover::after,
+button[type='submit']:hover::after {
+  animation: button-shine 700ms ease;
+}
+
+/* Progress bar shimmer */
+.progress > *,
+.progress-bar > * {
+  position: relative;
+  overflow: hidden;
+}
+
+.progress > *::after,
+.progress-bar > *::after {
+  position: absolute;
+  inset: 0;
+  content: '';
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.45),
+    transparent
+  );
+  animation: progress-shimmer 2.2s linear infinite;
+}
+
+/* Gamified feedback */
+.badge,
+.tag,
+.status {
+  animation: badge-pop 450ms ease both;
+}
+
+.badge.success,
+.status.success {
+  box-shadow: 0 0 0 0 rgba(102, 138, 107, 0.35);
+  animation: badge-pop 450ms ease both, success-glow 2.4s ease-in-out infinite;
+}
+
+.stat-value,
+.score,
+.score-value {
+  animation: score-pop 600ms ease both;
+}
+
+.streak,
+.achievement,
+.level-badge,
+.xp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #d9cfee;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #f5f1ff, #eeeafb);
+  color: var(--lavender-dark);
+  font-weight: 700;
+  padding: 8px 13px;
+  box-shadow: 0 6px 16px rgba(128, 108, 168, 0.12);
+}
+
+.streak::before {
+  content: '🔥';
+}
+
+.achievement::before {
+  content: '🏆';
+}
+
+.level-badge::before {
+  content: '✦';
+}
+
+.xp-badge::before {
+  content: '⭐';
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-22px) rotate(8deg);
+  }
+}
+
+@keyframes card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes button-shine {
+  from {
+    left: -75%;
+  }
+
+  to {
+    left: 135%;
+  }
+}
+
+@keyframes progress-shimmer {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes badge-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes score-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes success-glow {
+  50% {
+    box-shadow: 0 0 0 6px rgba(102, 138, 107, 0.08);
+  }
+}

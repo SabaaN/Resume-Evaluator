@@ -1,0 +1,140 @@
+.upload-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  margin-bottom: 40px;
+}
+
+.upload-row {
+  margin-bottom: 20px;
+}
+
+.upload-row:last-of-type {
+  margin-bottom: 0;
+}
+
+.upload-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.upload-count {
+  font-variant-numeric: tabular-nums;
+}
+
+.upload-dropzone {
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.upload-dropzone:hover {
+  border-color: var(--sage);
+  background: var(--bg);
+}
+
+.dropzone-hint {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.file-chip {
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.file-list {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.file-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  padding: 8px 12px;
+  background: var(--bg);
+  border-radius: var(--radius);
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1;
+  padding: 0 4px;
+}
+
+.remove-btn:hover {
+  color: var(--error);
+}
+
+.validation-error {
+  color: var(--error);
+  background: var(--error-bg);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  font-size: 14px;
+  margin-top: 16px;
+}
+
+.evaluate-btn {
+  width: 100%;
+  margin-top: 20px;
+  padding: 13px;
+  background: var(--sage-dark);
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 15px;
+  font-weight: 500;
+  transition: background 0.15s ease;
+}
+
+.evaluate-btn:hover:not(:disabled) {
+  background: var(--ink);
+}
+.upload-optional {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--muted);
+  opacity: 0.8;
+}
+
+.requirements-textarea {
+  width: 100%;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  resize: vertical;
+  min-height: 60px;
+  transition: border-color 0.15s ease;
+}
+
+.requirements-textarea::placeholder {
+  color: var(--muted);
+  opacity: 0.65;
+}
+
+.requirements-textarea:focus {
+  border-color: var(--sage);
+  outline: none;
+}
