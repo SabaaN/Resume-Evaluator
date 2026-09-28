@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import UploadPanel from './components/UploadPanel';
 import ResultsList from './components/ResultsList';
 import { evaluateCVs } from './api';
 import './App.css';
 
 export default function App() {
+  const heroRef = useRef(null);
   const [results, setResults] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [apiError, setApiError] = useState(null);
@@ -34,6 +35,13 @@ export default function App() {
     ? evaluated.reduce((sum, r) => sum + (Number(r.overall_match_score) || 0), 0) / evaluated.length
     : 0;
 
+  function handleHeroPointerMove(event) {
+    if (!heroRef.current) return;
+    const bounds = heroRef.current.getBoundingClientRect();
+    heroRef.current.style.setProperty('--pointer-x', `${event.clientX - bounds.left}px`);
+    heroRef.current.style.setProperty('--pointer-y', `${event.clientY - bounds.top}px`);
+  }
+
   return (
     <main className="app-shell">
       <header className="app-header">
@@ -42,7 +50,12 @@ export default function App() {
           <span className="eyebrow">AI RECRUITING SPACE</span>
         </div>
 
-        <div className="hero-copy">
+        <div
+          ref={heroRef}
+          className="hero-copy"
+          onPointerMove={handleHeroPointerMove}
+          onPointerLeave={() => heroRef.current?.style.setProperty('--pointer-x', '-999px')}
+        >
           <div>
             <h1>Find the right<br /><em>candidate faster.</em></h1>
             <p className="app-subhead">

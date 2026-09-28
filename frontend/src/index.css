@@ -43,7 +43,47 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+.neural-background {
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 1;
+}
+
+body::before,
+body::after {
+  position: fixed;
+  z-index: -1;
+  width: clamp(15rem, 38vw, 34rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  content: '';
+  pointer-events: none;
+  filter: blur(clamp(3rem, 8vw, 7rem));
+  opacity: .36;
+  will-change: transform;
+}
+
+body::before {
+  top: -18rem;
+  left: max(-13rem, -15vw);
+  background: #bdd9bd;
+  animation: ambient-drift-one 24s ease-in-out infinite alternate;
+}
+
+body::after {
+  right: max(-14rem, -16vw);
+  bottom: -20rem;
+  background: #d5c9ed;
+  animation: ambient-drift-two 30s ease-in-out infinite alternate;
+}
+
 #root {
+  position: relative;
+  z-index: 1;
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 44px 24px 96px;
@@ -239,6 +279,11 @@ button[type='submit'] {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  body::before,
+  body::after {
+    animation: none;
+  }
+
   *,
   *::before,
   *::after {
@@ -475,4 +520,14 @@ button[type='submit']:hover::after {
   50% {
     box-shadow: 0 0 0 6px rgba(102, 138, 107, 0.08);
   }
+}
+
+@keyframes ambient-drift-one {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(9vw, 13vh, 0) scale(1.12); }
+}
+
+@keyframes ambient-drift-two {
+  from { transform: translate3d(0, 0, 0) scale(1.08); }
+  to { transform: translate3d(-8vw, -12vh, 0) scale(.96); }
 }
