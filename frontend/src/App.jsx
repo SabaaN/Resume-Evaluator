@@ -28,24 +28,110 @@ export default function App() {
     }
   }
 
+  const evaluated = Array.isArray(results) ? results.filter((r) => !r.error) : [];
+  const shortlisted = evaluated.filter((r) => r.recommendation === 'Shortlist').length;
+  const averageScore = evaluated.length
+    ? evaluated.reduce((sum, r) => sum + (Number(r.overall_match_score) || 0), 0) / evaluated.length
+    : 0;
+
   return (
-    <main>
+    <main className="app-shell">
       <header className="app-header">
-        <h1>Resume Evaluator</h1>
-        <p className="app-subhead">Upload a job description and up to 10 CVs to rank candidates by fit.</p>
+        <div className="brand-row">
+          <div className="brand-mark" aria-hidden="true"><span /><span /><span /></div>
+          <span className="eyebrow">AI RECRUITING SPACE</span>
+        </div>
+
+        <div className="hero-copy">
+          <div>
+            <h1>Find the right<br /><em>candidate faster.</em></h1>
+            <p className="app-subhead">
+              Upload a job description and CVs. Let AI analyze fit, surface strengths,
+              and rank candidates in seconds.
+            </p>
+            <div className="hero-pills">
+              <span>✦ AI-powered matching</span>
+              <span>✓ Ranked candidates</span>
+              <span>✮ Easy evaluation</span>
+            </div>
+          </div>
+
+          <div className="hero-orbit" aria-hidden="true">
+            <div className="orbit orbit-one" />
+            <div className="orbit orbit-two" />
+            <div className="orbit-core"><span>✦</span><small></small></div>
+            <div className="orbit-dot dot-one" />
+            <div className="orbit-dot dot-two" />
+            <div className="orbit-dot dot-three" />
+          </div>
+        </div>
       </header>
 
-      <UploadPanel onEvaluate={handleEvaluate} isLoading={isLoading} />
+      <section className="workspace-section">
+        <div className="section-label">
+         
+          <div>
+            <strong>BUILD YOUR REQUIREMENTS</strong>
+            <small>Provide the role requirements and resumes to evaluate.</small>
+          </div>
+        </div>
+        <UploadPanel onEvaluate={handleEvaluate} isLoading={isLoading} />
+      </section>
 
       {isLoading && (
-        <p className="status-message">Evaluating candidates — this can take a moment for larger batches…</p>
+        <div className="status-message loading-status">
+          <span className="loading-spinner" />
+          <div>
+            <strong>Analyzing candidates</strong>
+            <span>Comparing experience, skills, education, and role fit…</span>
+          </div>
+        </div>
       )}
 
       {apiError && (
-        <p className="status-message error">{apiError}</p>
+        <div className="status-message error">
+          <span className="status-icon">!</span>
+          <div><strong>Evaluation failed</strong><span>{apiError}</span></div>
+        </div>
       )}
 
-      <ResultsList results={results} />
+      {results && (
+        <section className="results-section">
+          <div className="section-label">
+            <div>
+              <strong>CANDIDATES ANALYSIS</strong>
+              <small>AI-ranked results with transparent reasoning.</small>
+            </div>
+          </div>
+
+          <div className="results-overview">
+            <div className="results-title">
+              <div>
+                <span className="results-kicker">EVALUATION COMPLETE</span>
+                <h2>Your candidate shortlist</h2>
+              </div>
+              <span className="results-count">{evaluated.length} evaluated</span>
+            </div>
+
+            <div className="overview-stats">
+              <div className="overview-stat">
+                <span className="stat-icon">◎</span>
+                <div><strong>{results.length}</strong><span>Total CVs</span></div>
+              </div>
+              <div className="overview-stat">
+                <span className="stat-icon">✓</span>
+                <div><strong>{shortlisted}</strong><span>Shortlisted</span></div>
+              </div>
+              <div className="overview-stat">
+                <span className="stat-icon">✦</span>
+                <div><strong>{averageScore ? averageScore.toFixed(1) : '—'}</strong><span>Average match</span></div>
+              </div>
+            </div>
+          </div>
+
+          <ResultsList results={results} />
+        </section>
+      )}
     </main>
   );
 }
