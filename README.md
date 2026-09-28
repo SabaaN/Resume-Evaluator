@@ -8,7 +8,7 @@ Built with **LangGraph** for orchestration, **Groq** (Llama/GPT-OSS models) for 
 
 ## Features
 
-- Upload one job description (`.txt`) and up to 10 candidate CVs (`.pdf`)
+- Upload one job description (`.txt`, `.pdf`, `.doc`, or `.docx`) and up to 10 candidate CVs (`.pdf`)
 - Optional **Additional Requirements** field to capture anything missing from the JD (e.g. "remote only", "must have led a team")
 - Each CV is evaluated independently and in parallel via a LangGraph fan-out, so one bad PDF or failed call never breaks the batch
 - Per-candidate evaluation includes:
@@ -37,6 +37,7 @@ Built with **LangGraph** for orchestration, **Groq** (Llama/GPT-OSS models) for 
 | LLM | Groq API (`openai/gpt-oss-120b`) — free tier, no card required |
 | Backend | FastAPI (Python) |
 | PDF parsing | pdfplumber |
+| Word parsing | python-docx, olefile |
 | Frontend | React (Vite) |
 | Styling | Plain CSS (custom properties, no framework) |
 
@@ -46,7 +47,7 @@ Built with **LangGraph** for orchestration, **Groq** (Llama/GPT-OSS models) for 
 
 ```
 React Dashboard
-   │  upload JD (.txt) + additional requirements (optional) + up to 10 CVs (.pdf)
+   │  upload JD (.txt/.pdf/.doc/.docx) + additional requirements (optional) + up to 10 CVs (.pdf)
    ▼
 FastAPI  /evaluate
    │  parse JD text, merge in additional requirements
@@ -150,7 +151,7 @@ Open the printed local URL (default Vite port `5173`). Make sure this matches th
 
 | Field | Type | Required | Notes |
 |---|---|---|---|
-| `jd` | file (`.txt`) | Yes | Job description |
+| `jd` | file (`.txt`, `.pdf`, `.doc`, `.docx`) | Yes | Job description |
 | `cvs` | file(s) (`.pdf`) | Yes | Up to 10 |
 | `additional_requirements` | text | No | Freeform, merged into the JD context |
 

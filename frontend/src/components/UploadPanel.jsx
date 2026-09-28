@@ -15,8 +15,8 @@ export default function UploadPanel({ onEvaluate, isLoading }) {
     function handleJdChange(e) {
         const file = e.target.files[0];
         if (!file) return;
-        if (!file.name.toLowerCase().endsWith('.txt')) {
-            setValidationError('Job description must be a .txt file.');
+        if (!/\.(txt|pdf|doc|docx)$/i.test(file.name)) {
+            setValidationError('Job description must be a .txt, .pdf, .doc, or .docx file.');
             return;
         }
         setValidationError(null);
@@ -61,13 +61,13 @@ export default function UploadPanel({ onEvaluate, isLoading }) {
                     {jdFile ? (
                         <span className="file-chip">{jdFile.name}</span>
                     ) : (
-                        <span className="dropzone-hint">Click to choose a .txt file</span>
+                        <span className="dropzone-hint">Click to choose JD (.txt, .pdf, .doc, or .docx acceptable)</span>
                     )}
                 </div>
                 <input
                     ref={jdInputRef}
                     type="file"
-                    accept=".txt"
+                    accept=".txt,.pdf,.doc,.docx"
                     onChange={handleJdChange}
                     hidden
                 />
@@ -98,7 +98,7 @@ export default function UploadPanel({ onEvaluate, isLoading }) {
                     onClick={() => cvFiles.length < MAX_CVS && cvInputRef.current.click()}
                 >
                     <span className="dropzone-hint">
-                        {cvFiles.length < MAX_CVS ? 'Click to add PDF resumes' : 'Maximum reached'}
+                        {cvFiles.length < MAX_CVS ? 'Click to add resumes (PDF format)' : 'Maximum reached'}
                     </span>
                 </div>
                 <input

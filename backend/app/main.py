@@ -2,6 +2,7 @@ from fastapi import FastAPI, UploadFile, File, HTTPException, Form
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.utils.pdf_parser import extract_text_from_pdf
+from app.utils.jd_parser import extract_text_from_doc
 from app.graph.workflow import compiled_graph
 from app.graph.state import CVResult
 from app.models.schemas import EvaluateResponse, CVResultResponse
@@ -24,8 +25,10 @@ async def evaluate(
     cvs: list[UploadFile] = File(...),
     additional_requirements: str = Form(default=""),
 ):
-    if not jd.filename.lower().endswith(".txt"):
-        raise HTTPException(400, "JD must be a .txt file")
+    jd_filename = (jd.filename or "").lower()
+    jd_extension = jd_filename.rsplit(".", 1)[-1] if "." in jd_filename else ""
+    if jd_extension not in {"txt", "pdf", "doc", "docx"}:
+        raise HTTPException(400, "JD must be a .txt, .pdf, .doc, or .docx file")
 
     if len(cvs) == 0:
         raise HTTPException(400, "At least one CV is required")
@@ -38,9 +41,16 @@ async def evaluate(
 
     jd_bytes = await jd.read()
     try:
-        jd_text = jd_bytes.decode("utf-8")
+        if jd_extension == "txt":
+            jd_text = jd_bytes.decode("utf-8")
+        elif jd_extension == "pdf":
+            jd_text = extract_text_from_pdf(jd_bytes)
+        else:
+            jd_text = extract_text_from_doc(jd_bytes, jd_extension)
     except UnicodeDecodeError:
         raise HTTPException(400, "JD file must be UTF-8 encoded text")
+    except ValueError as e:
+        raise HTTPException(400, str(e))
 
     if not jd_text.strip():
         raise HTTPException(400, "JD file is empty")
