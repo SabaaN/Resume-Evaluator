@@ -45,12 +45,28 @@ body {
 
 .neural-background {
   position: fixed;
-  z-index: 0;
+  /* Negative z-index paints this before any non-positioned in-flow content
+     in #root's stacking context (cards, panels, etc. are position:static),
+     so it stays behind everything else no matter where it sits in the DOM. */
+  z-index: -1;
   inset: 0;
+  display: block;
   width: 100%;
   height: 100%;
   pointer-events: none;
-  opacity: 1;
+  opacity: 0.9;
+}
+
+@media (max-width: 640px) {
+  .neural-background {
+    opacity: 0.7;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .neural-background {
+    opacity: 0.45;
+  }
 }
 
 body::before,

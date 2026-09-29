@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import UploadPanel from './components/UploadPanel';
 import ResultsList from './components/ResultsList';
+import ParticleBackground from './components/ParticleBackground';
 import { evaluateCVs } from './api';
 import './App.css';
 
@@ -44,6 +45,7 @@ export default function App() {
 
   return (
     <main className="app-shell">
+      <ParticleBackground />
       <header className="app-header">
         <div className="brand-row">
           <div className="brand-mark" aria-hidden="true"><span /><span /><span /></div>
